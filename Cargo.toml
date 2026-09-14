@@ -2,7 +2,7 @@
 name = "replicante"
 version = "0.1.0"
 edition = "2021"
-description = "Constructor auto-reproductor: un programa que escribe una copia compilable de sí mismo."
+description = "A constructor that writes a compilable copy of itself."
 license = "MIT"
 publish = false
 repository = "https://github.com/PascualMacana/replicante"

@@ -1,27 +1,27 @@
 # replicante
 
-Un programa chico en Rust que se copia. El binario lleva su propia fuente y puede escribir un proyecto Cargo hijo que, una vez compilado, hace lo mismo.
+A small Rust program that copies itself. The binary carries its own source and can write a child Cargo project that, once compiled, can do the same thing.
 
-No es un modelo de lenguaje y no se copia solo. Le señalás una carpeta; sólo escribe ahí.
+It is not a language model and it does not spread by itself. You point it at a folder; it only writes there.
 
 ```
-generación 0  ──spawn──►  generación 1  ──spawn──►  generación 2
-linaje     0               linaje     0.1            linaje     0.1.1
+generation 0  ──spawn──►  generation 1  ──spawn──►  generation 2
+lineage    0               lineage    0.1            lineage    0.1.1
 ```
 
-El hijo es el mismo programa, una generación después. El linaje cuenta hijas, no el número de generación: la primera hija de `0` es `0.1`, la primera hija de esa es `0.1.1`, y una segunda hija de `0` es `0.2`. No se vuelve más inteligente; hereda el genoma y sube el contador.
+The child is the same program, one generation later. Lineage counts daughters, not the generation number: the first child of `0` is `0.1`, its first child is `0.1.1`, and a second child of `0` is `0.2`. It does not get smarter; it just inherits the genome and bumps the counter.
 
-![Una célula padre que brota una hija](cell.svg)
+![A parent cell budding off a daughter](cell.svg)
 
-Míralo en la terminal. El padre se queda; una hija se desprende. Eso es `spawn`, dibujado como una célula.
+Watch it happen in the terminal. The parent stays; a daughter pinches off. That is `spawn`, drawn as a cell.
 
 ```bash
 cargo run -- dish
 ```
 
-## Cómo correrlo
+## Run it
 
-Hace falta [Rust](https://rustup.rs/).
+You need [Rust](https://rustup.rs/).
 
 ```bash
 cargo build --release
@@ -32,26 +32,26 @@ cargo build --release
 ./nieto/target/debug/replicante identity
 ```
 
-`identity` imprime generación, linaje y los archivos embebidos.  
-`spawn ./hijo --build` escribe un crate hijo en `./hijo` y lo compila.
+`identity` prints generation, lineage, and the embedded files.  
+`spawn ./hijo --build` writes a child crate into `./hijo` and compiles it.
 
-## Comandos
+## Commands
 
 ```
-replicante              ayuda
-replicante identity     generación, linaje, archivos del genoma
-replicante genome       imprime las fuentes embebidas
-replicante dish         anima una célula que brota hijas
-                 --gens N  cuántos brotes (default 8)
-                 --delay MS  ms por cuadro (default 80)
-replicante spawn <dir>  escribe un proyecto Cargo hijo
-                 --build   compila a ese hijo
-                 --force   pisa un hijo anterior
+replicante              help
+replicante identity     generation, lineage, genome files
+replicante genome       print the embedded sources
+replicante dish         animate a cell budding daughters
+                 --gens N  how many buds (default 8)
+                 --delay MS  ms per frame (default 80)
+replicante spawn <dir>  write a child Cargo project
+                 --build   compile that child
+                 --force   overwrite a previous child
 ```
 
-## Cómo funciona
+## How it works
 
-En tiempo de compilación, `include_str!` embebe cada archivo del proyecto dentro del binario:
+At compile time, `include_str!` embeds every project file inside the binary:
 
 ```rust
 const GENOME: &[(&str, &str)] = &[
@@ -61,26 +61,26 @@ const GENOME: &[(&str, &str)] = &[
 ];
 ```
 
-`spawn` escribe esos archivos a disco y actualiza dos constantes en `src/main.rs`:
+`spawn` writes those files to disk and updates two constants in `src/main.rs`:
 
 ```rust
 const GENERATION: u32 = 0;
 const LINEAGE: &str = "0";
 ```
 
-El hijo nace con `GENERATION = 1` y `LINEAGE = "0.1"`. Cuando lo compilás, su propio `include_str!` captura esa fuente nueva. Lo que se copia es el genoma, no el ejecutable.
+The child gets `GENERATION = 1` and `LINEAGE = "0.1"`. When you compile it, its own `include_str!` captures that new source. What is copied is the genome, not the executable.
 
-El hijo sigue necesitando `rustc` / `cargo` para poder correr.
+The child still needs `rustc` / `cargo` to become runnable.
 
-## Seguridad
+## Safety
 
-- Un hijo por corrida. No hay bucles en segundo plano ni red.
-- No escribe sobre el directorio home, `/`, `/usr`, `/etc`, ni el directorio en el que estás parado.
-- `--force` sólo borra una carpeta que ya parece un proyecto `replicante`.
+- One child per run. No background loops, no network.
+- It will not write over your home directory, `/`, `/usr`, `/etc`, or the directory you are standing in.
+- `--force` only deletes a folder that already looks like a `replicante` project.
 
-## Relacionados
+## Related
 
-[mejorante](https://github.com/PascualMacana/mejorante) es un hermano que se copia y además intenta mejorar.  
-[demostrante](https://github.com/PascualMacana/demostrante) es un hermano que sólo escribe una mejora afirmada si hay una prueba verificable.  
-[reinante](https://github.com/PascualMacana/reinante) es un hermano que se sigue reescribiendo porque el objetivo mismo se mueve.  
-[cruzante](https://github.com/PascualMacana/cruzante) es un hermano que se queda con los cruces del río que todavía eran legales.
+[mejorante](https://github.com/PascualMacana/mejorante) is a sibling that copies itself and also tries to improve.  
+[demostrante](https://github.com/PascualMacana/demostrante) is a sibling that only writes a claimed improvement when a checkable proof says so.  
+[reinante](https://github.com/PascualMacana/reinante) is a sibling that keeps rewriting because the target itself moves.  
+[cruzante](https://github.com/PascualMacana/cruzante) is a sibling that keeps the river crossings that were still legal.
