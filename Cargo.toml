@@ -5,7 +5,7 @@ edition = "2021"
 description = "A constructor that writes a compilable copy of itself."
 license = "MIT"
 publish = false
-repository = "https://github.com/PascualMacana/replicante"
+repository = "https://github.com/PascualMacana/replicator"
 
 [[bin]]
 name = "replicante"
