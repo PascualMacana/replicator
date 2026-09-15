@@ -83,4 +83,6 @@ The child still needs `rustc` / `cargo` to become runnable.
 [improver](https://github.com/PascualMacana/improver) is a sibling that copies itself and also tries to improve.  
 [prover](https://github.com/PascualMacana/prover) is a sibling that only writes a claimed improvement when a checkable proof says so.  
 [red-queen](https://github.com/PascualMacana/red-queen) is a sibling that keeps rewriting because the target itself moves.  
-[crosser](https://github.com/PascualMacana/crosser) is a sibling that keeps the river crossings that were still legal.
+[crosser](https://github.com/PascualMacana/crosser) is a sibling that keeps the river crossings that were still legal.  
+[inquirer](https://github.com/PascualMacana/inquirer) is a sibling that keeps the house assignments the clues did not refute.  
+[tide](https://github.com/PascualMacana/tide) is a sibling that keeps searching because the river's rules hop.
